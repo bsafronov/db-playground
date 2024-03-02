@@ -1,4 +1,4 @@
-import { Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { CollectionService } from './collection.service';
 import { CreateCollectionDTO } from './dto/create-collection.dto';
 
@@ -7,7 +7,7 @@ export class CollectionController {
   constructor(private collectionService: CollectionService) {}
 
   @Post()
-  create(dto: CreateCollectionDTO) {
+  create(@Body() dto: CreateCollectionDTO) {
     return this.collectionService.create(dto);
   }
 }
