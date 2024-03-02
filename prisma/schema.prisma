@@ -22,8 +22,10 @@ datasource db {
 }
 
 model Collection {
-  id     Int               @id @default(autoincrement())
-  name   String
+  id       Int     @id @default(autoincrement())
+  name     String
+  isPublic Boolean @default(false)
+
   fields CollectionField[]
   rows   CollectionRow[]
 }
@@ -57,4 +59,6 @@ model CollectionValue {
 
   field   CollectionField @relation(fields: [fieldId], references: [id])
   fieldId Int
+
+  @@unique([rowId, fieldId])
 }
