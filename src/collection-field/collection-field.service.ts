@@ -10,6 +10,14 @@ export class CollectionFieldService {
     private collectionService: CollectionService,
   ) {}
 
+  async findById(id: number) {
+    return this.db.collectionField.findUnique({
+      where: {
+        id,
+      },
+    });
+  }
+
   async create({ name, type, collectionId }: CreateCollectionFieldDTO) {
     const collection = await this.collectionService.findById(collectionId);
 

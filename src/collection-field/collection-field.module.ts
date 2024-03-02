@@ -8,5 +8,6 @@ import { PrismaService } from 'src/prisma.service';
   imports: [CollectionModule],
   controllers: [CollectionFieldController],
   providers: [CollectionFieldService, PrismaService],
+  exports: [CollectionFieldService],
 })
 export class CollectionFieldModule {}
