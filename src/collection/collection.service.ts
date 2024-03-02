@@ -1,6 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { CreateCollectionDTO } from './dto/create-collection.dto';
+import { DeleteCollectionDTO } from './dto/delete-collection.dto';
 
 @Injectable()
 export class CollectionService {
@@ -10,5 +11,17 @@ export class CollectionService {
     return await this.db.collection.create({
       data: dto,
     });
+  }
+
+  async delete(dto: DeleteCollectionDTO) {
+    try {
+      return await this.db.collection.delete({
+        where: {
+          id: dto.id,
+        },
+      });
+    } catch {
+      throw new NotFoundException('Collection not found');
+    }
   }
 }
