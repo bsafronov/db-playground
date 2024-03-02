@@ -7,6 +7,14 @@ import { DeleteCollectionDTO } from './dto/delete-collection.dto';
 export class CollectionService {
   constructor(private db: PrismaService) {}
 
+  async findById(id: number) {
+    return await this.db.collection.findUnique({
+      where: {
+        id,
+      },
+    });
+  }
+
   async create(dto: CreateCollectionDTO) {
     return await this.db.collection.create({
       data: dto,
