@@ -15,6 +15,10 @@ export class CollectionService {
     });
   }
 
+  async findMany() {
+    return await this.db.collection.findMany();
+  }
+
   async create(dto: CreateCollectionDTO) {
     return await this.db.collection.create({
       data: dto,
