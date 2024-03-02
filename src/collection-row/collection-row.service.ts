@@ -10,6 +10,14 @@ export class CollectionRowService {
     private collectionService: CollectionService,
   ) {}
 
+  async findById(id: number) {
+    return this.db.collectionRow.findUnique({
+      where: {
+        id,
+      },
+    });
+  }
+
   async create({ collectionId }: CreateCollectionRowDTO) {
     const collection = await this.collectionService.findById(collectionId);
 
