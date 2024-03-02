@@ -4,6 +4,14 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
+enum FieldType {
+  TEXT
+  RICH_TEXT
+  NUMBER
+  FILE
+  IMAGE
+}
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,4 +19,42 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model Collection {
+  id     Int               @id @default(autoincrement())
+  name   String
+  fields CollectionField[]
+  rows   CollectionRow[]
+}
+
+model CollectionRow {
+  id Int @id @default(autoincrement())
+
+  values CollectionValue[]
+
+  collection   Collection @relation(fields: [collectionId], references: [id])
+  collectionId Int
+}
+
+model CollectionField {
+  id   Int       @id @default(autoincrement())
+  name String
+  type FieldType
+
+  values CollectionValue[]
+
+  collection   Collection @relation(fields: [collectionId], references: [id])
+  collectionId Int
+}
+
+model CollectionValue {
+  id    Int    @id @default(autoincrement())
+  value String
+
+  row   CollectionRow @relation(fields: [rowId], references: [id])
+  rowId Int
+
+  field   CollectionField @relation(fields: [fieldId], references: [id])
+  fieldId Int
 }
